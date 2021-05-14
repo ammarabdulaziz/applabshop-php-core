@@ -8,6 +8,12 @@ require('functions.php');
 
 $products = $product->getData();
 
+if ($_SERVER['REQUEST_METHOD'] == "POST") {
+    if (isset($_POST['cart_submit'])) {
+        $cart->addToCart($_POST['user_id'], $_POST['item_id']);
+    }
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -34,7 +40,11 @@ $products = $product->getData();
                             ?>
                         </p>
                         <h4><?php echo $product['price'] . ' Rs' ?? 'Unkown' ?></h4>
-                        <a href="#" class="btn btn-primary">Add to cart</a>
+                        <form method="post">
+                            <input type="hidden" name="item_id" value="<?php echo $product['item_id'] ?? '1'; ?>">
+                            <input type="hidden" name="user_id" value="<?php echo 1; ?>">
+                            <button type="submit" name="cart_submit" class="btn btn-info">Add to Cart</button>
+                        </form>
                     </div>
                 </div>
             <?php } ?>
