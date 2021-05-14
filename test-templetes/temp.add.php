@@ -45,7 +45,7 @@ if (isset($_POST['submit'])) {
 
 <!DOCTYPE html>
 
-<?php include('templates/header.php') ?>
+<?php include('templates/sidebar.php') ?>
 
 <section class="container">
     <div class="page-header mt-5">
