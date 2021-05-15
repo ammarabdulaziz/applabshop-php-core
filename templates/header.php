@@ -15,7 +15,7 @@
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container container-fluid">
-            <a class="navbar-brand" href="#">Applab Shop</a>
+            <a class="navbar-brand" href="index.php">Applab Shop</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -25,18 +25,12 @@
                 <div class="d-flex">
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item ps-4">
-                            <a class="nav-link active" href="#">Home
+                            <a class="nav-link active" href="index.php">Home
                                 <span class="visually-hidden">(current)</span>
                             </a>
                         </li>
                         <li class="nav-item ps-4">
-                            <a class="nav-link" href="#">Features</a>
-                        </li>
-                        <li class="nav-item ps-4">
-                            <a class="nav-link" href="#">Pricing</a>
-                        </li>
-                        <li class="nav-item ps-4">
-                            <a class="nav-link" href="#">About</a>
+                            <a class="nav-link" href="cart.php">Cart <span class="badge rounded-pill bg-warning"><?php echo count($product->getData(table: 'cart')); ?></span></a>
                         </li>
                         <li class="nav-item ps-4">
                             <a class="btn btn-secondary my-2 my-sm-0" href="#">Login</a>
