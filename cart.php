@@ -40,6 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <thead>
                         <tr>
                             <th class="fit" scope="col">Title</th>
+                            <th class="fit" scope="col">Qty</th>
                             <th scope="col">Brand</th>
                             <th scope="col">Image</th>
                             <th scope="col">Price</th>
@@ -54,6 +55,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         ?>
                                 <tr>
                                     <th class="fit align-middle" scope="row"><?php echo $item['name'] ?></th>
+                                    <th class="fit align-middle">
+                                        <button type="button" class="btn btn-sm btn-success">-</button>
+                                        <span class="badge bg-light p-2" style="color: #777 !important; font-weight: 200 !important;">10</span>
+                                        <button type="button" class="btn btn-sm btn-success">+</button>
+                                    </th>
                                     <td class="align-middle"><?php echo $item['brand'] ?></td>
                                     <td class="align-middle"><img src="<?php echo $item['item_image'] ?? "./products/1.png" ?>" style="height: 10px;" alt="cart1" class="img-fluid"></td>
                                     <td class="align-middle"><?php echo $item['price'] ?></td>
@@ -78,7 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <h5 class="mb-0 pt-1 pb-1">Checkout</h5>
                     </div>
                     <div class="card-body">
-                        <h6 class="card-title">Subtotal - <b><?php echo count($Product->getData(table: 'cart')); ?></b> Items: <span class="text-success">
+                        <h6 class="card-title">Subtotal - <b><?php echo isset($subTotal) ? count($Product->getData(table: 'cart')) : 0; ?></b> Items: <span class="text-success">
                                 <?php echo isset($subTotal) ? $Cart->getSum($subTotal) : 0; ?> Rs</span>
                         </h6>
                         <!-- <p class="card-text">With supporting text below as a natural lead-in to additional content.</p> -->
