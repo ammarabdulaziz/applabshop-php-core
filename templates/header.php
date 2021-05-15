@@ -30,7 +30,7 @@
                             </a>
                         </li>
                         <li class="nav-item ps-4">
-                            <a class="nav-link" href="cart.php">Cart <span class="badge rounded-pill bg-warning"><?php echo count($product->getData(table: 'cart')); ?></span></a>
+                            <a class="nav-link" href="cart.php">Cart <span class="badge rounded-pill bg-warning"><?php echo count($Product->getData(table: 'cart')); ?></span></a>
                         </li>
                         <li class="nav-item ps-4">
                             <a class="btn btn-secondary my-2 my-sm-0" href="#">Login</a>

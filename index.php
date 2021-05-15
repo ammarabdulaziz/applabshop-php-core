@@ -6,11 +6,11 @@
 
 require('functions.php');
 
-$products = $product->getData();
+$products = $Product->getData();
 
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
     if (isset($_POST['cart_submit'])) {
-        $cart->addToCart($_POST['user_id'], $_POST['item_id']);
+        $Cart->addToCart($_POST['user_id'], $_POST['item_id']);
     }
 }
 
