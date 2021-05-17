@@ -33,7 +33,7 @@ class Cart
         if (isset($arr)) {
             $sum = 0;
             foreach ($arr as $item) {
-                $sum += floatval($item[0]);
+                $sum += floatval($item[0][0]) * $item[0][1];
             }
             return sprintf('%.2f', $sum);
         }
@@ -59,6 +59,16 @@ class Cart
                 return $value[$key];
             }, $cartArray);
             return $cart_id;
+        }
+    }
+
+    public function updateQty($cart_id, $count, $table = 'cart')
+    {
+        if (isset($cart_id)) {
+            $query = sprintf("UPDATE %s SET qty = qty + %d WHERE cart_id = %s", $table, intval($count), $cart_id);
+
+            $result = $this->db->con->query($query);
+            return $result;
         }
     }
 }

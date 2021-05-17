@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         <div class="row d-flex justify-content-between">
             <?php foreach ($products as $product) { ?>
                 <div class="card mt-4" style="width: 18rem;">
-                    <img class="card-img-top" src="<?php echo $product['image'] ?? 'https://images-na.ssl-images-amazon.com/images/I/81AqwYyZjzL._AC_SL1500_.jpg' ?>" alt="Card image cap">
+                    <img class="card-img-top" src="<?php echo $product['image'] ?>" alt="1.PNG">
                     <div class="card-body">
                         <h5 class="card-title"><?php echo $product['name'] ?? 'Unkown' ?></h5>
                         <p class="card-text">
