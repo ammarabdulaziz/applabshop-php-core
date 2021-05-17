@@ -29,10 +29,13 @@
                             </a>
                         </li>
                         <li class="nav-item ps-4">
-                            <a class="nav-link" href="cart.php">Cart <span class="badge rounded-pill bg-warning"><?php echo count($Product->getData(table: 'cart')); ?></span></a>
+                            <a class="nav-link" href="cart.php">Cart <span class="badge rounded-pill bg-warning"><?php echo count($Product->getData(table: 'cart')) ?? '0'; ?></span></a>
                         </li>
                         <li class="nav-item ps-4">
-                            <a class="btn btn-secondary my-2 my-sm-0" href="#">Login</a>
+                            <?php
+                            if (isset($_SESSION['username'])) echo '<a class="btn btn-secondary my-2 my-sm-0" href="logout.php">Logout</a>';
+                            else echo '<a class="btn btn-secondary my-2 my-sm-0" href="login.php">Login</a>';
+                            ?>
                         </li>
                     </ul>
                 </div>

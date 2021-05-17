@@ -3,6 +3,7 @@
 // $conn = mysqli_connect('localhost', 'root', '', 'applabshop');
 
 // if (!$conn) echo 'Connection err: ' . mysqli_connect_error();
+session_start();
 
 require('functions.php');
 

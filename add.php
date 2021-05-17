@@ -1,5 +1,7 @@
 <?php
 
+require('functions.php');
+
 $errors = array('title' => '', 'brand' => '', 'specs' => '');
 $title = $brand = $specs = '';
 
@@ -34,11 +36,11 @@ if (isset($_POST['submit'])) {
         }
     }
 
-    if (array_filter($errors)) {
-        echo 'Errors in form';
-    } else {
-        header('Location: index.php');
-    }
+    // if (array_filter($errors)) {
+    //     echo 'Errors in form';
+    // } else {
+    //     header('Location: index.php');
+    // }
 }
 
 ?>

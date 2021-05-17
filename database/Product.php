@@ -28,6 +28,7 @@ class Product
     {
         if (isset($item_id)) {
             $result = $this->db->con->query("SELECT * FROM {$table} WHERE item_id={$item_id}");
+            // $result = mysqli_query($conn, $sql);
 
             $resultArray = array();
 
