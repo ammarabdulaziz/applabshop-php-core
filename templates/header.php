@@ -33,7 +33,7 @@
                         </li>
                         <li class="nav-item ps-4">
                             <?php
-                            if (isset($_SESSION['username'])) echo '<a class="btn btn-secondary my-2 my-sm-0" href="logout.php">Logout</a>';
+                            if (isset($_SESSION['user_id'])) echo '<a class="btn btn-secondary my-2 my-sm-0" href="logout.php">Logout</a>';
                             else echo '<a class="btn btn-secondary my-2 my-sm-0" href="login.php">Login</a>';
                             ?>
                         </li>

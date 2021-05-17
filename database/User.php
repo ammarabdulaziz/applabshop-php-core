@@ -31,4 +31,18 @@ class User
             return $errors['username'] = 'This username already exists.';
         }
     }
+
+    public function loginUser($username, $password)
+    {
+        $sql = "SELECT * FROM user WHERE username='{$username}' AND password='{$password}'";
+        $result = mysqli_query($this->db->con, $sql);
+
+        if ($result->num_rows > 0) {
+            $user = mysqli_fetch_array($result, MYSQLI_ASSOC);
+            $_SESSION['username'] = $user['username'];
+            header("Location: index.php");
+        } else {
+            return false;
+        }
+    }
 }

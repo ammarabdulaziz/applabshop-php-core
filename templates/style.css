@@ -158,3 +158,55 @@ body {
     display: block;
   }
 }
+
+
+/* Alert */
+
+.page__title {
+  text-align: center;
+  text-transform: uppercase;
+}
+.spacer {
+  margin-bottom: 1rem;
+}
+.alert {
+  border-radius: 0.125rem;
+  padding: 0.5rem;
+  color: #2C3E50;
+}
+.alert__icon {
+  margin: 0 1rem;
+}
+.alert__text {
+  display: inline-block;
+  font-size: 14px;
+}
+.alert__close {
+  float: right;
+  padding: 2.5px 1px;
+  color: #2C3E50;
+  background-color: transparent;
+  border: 0;
+  cursor: pointer;
+}
+.alert__close span {
+  font-size: 1rem;
+}
+.alert__primary {
+  background-color: #ccf2ff;
+}
+.alert__secondary {
+  background-color: #e2e3e3;
+}
+.alert__warning {
+  background-color: #ff9;
+}
+.alert__error {
+  background-color: #ffb3b3;
+}
+.alert__success {
+  background-color: #d6f5d6;
+}
+.closed {
+  display: none;
+}
