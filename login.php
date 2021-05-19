@@ -1,12 +1,20 @@
 <?php
-session_start();
+if (session_status() == PHP_SESSION_NONE) session_start();
+
 require('functions.php');
 
-if (isset($_SESSION['username'])) {
+if (isset($_SESSION['user_id'])) {
     header("Location: index.php");
 }
 
-if (isset($_POST['submit'])) $error = $User->loginUser($_POST['username'], md5($_POST['password']));
+$errors = array('name' => '', 'username' => '', 'password' => '');
+
+if (isset($_POST['submit'])) {
+    if (empty($_POST['username'])) $errors['username'] = 'Username is empty';
+    if (empty($_POST['password'])) $errors['password'] = 'Password is empty';
+
+    if (!array_filter($errors)) $error = $User->loginUser($_POST['username'], md5($_POST['password']));
+}
 
 ?>
 <!DOCTYPE html>
@@ -32,10 +40,12 @@ if (isset($_POST['submit'])) $error = $User->loginUser($_POST['username'], md5($
         </div>
         <form action="login.php" method="POST" class="login-email">
             <div class="input-group">
-                <input type="text" placeholder="Username" name="username" required>
+                <input type="text" placeholder="Username" name="username" value="<?php echo $_POST['username'] ?? '' ?>">
+                <small style="color: red; margin: 1.5em;"><?php echo $errors['username'] ?></small>
             </div>
             <div class="input-group">
-                <input type="password" placeholder="Password" name="password" required>
+                <input type="password" placeholder="Password" name="password" value="<?php echo $_POST['password'] ?? '' ?>">
+                <small style="color: red; margin: 1.5em;"><?php echo $errors['password'] ?></small>
             </div>
             <div class="input-group">
                 <button name="submit" class="btn">Login</button>

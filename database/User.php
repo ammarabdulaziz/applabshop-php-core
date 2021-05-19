@@ -19,7 +19,14 @@ class User
             $query = "INSERT INTO user (username, name, password) VALUES ('$username', '$name', '$password')";
             $result = $this->db->con->query($query);
             if ($result) {
-                $_SESSION["username"] = $username;
+                $last_id = mysqli_insert_id($this->db->con);
+                if (session_status() == PHP_SESSION_NONE) {
+                    session_start();
+                } else {
+                    session_destroy();
+                    session_start();
+                }
+                $_SESSION["user_id"] = $last_id;
                 header("Location:" . 'index.php');
                 $name = "";
                 $username = "";
@@ -39,7 +46,13 @@ class User
 
         if ($result->num_rows > 0) {
             $user = mysqli_fetch_array($result, MYSQLI_ASSOC);
-            $_SESSION['username'] = $user['username'];
+            if (session_status() == PHP_SESSION_NONE) {
+                session_start();
+            } else {
+                session_destroy();
+                session_start();
+            }
+            $_SESSION['user_id'] = $user['user_id'];
             header("Location: index.php");
         } else {
             return false;

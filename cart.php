@@ -3,17 +3,7 @@
 // $conn = mysqli_connect('localhost', 'root', '', 'applabshop');
 
 // if (!$conn) echo 'Connection err: ' . mysqli_connect_error();
-session_start();
-
-require('functions.php');
-
-$products = $Product->getData();
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    if (isset($_POST['delete-cart-submit'])) {
-        $deletedrecord = $Cart->deleteCart($_POST['item_id']);
-    }
-}
+if (session_status() == PHP_SESSION_NONE) session_start();
 
 ?>
 
@@ -32,7 +22,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 </style>
 
-<?php include('templates/header.php') ?>
+<?php
+include('templates/header.php');
+$products = $Product->getData();
+
+// if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+//     if (isset($_POST['delete-cart-submit'])) {
+//         $deletedrecord = $Cart->deleteCart($_POST['user_id'], $_POST['item_id']);
+//     }
+// }
+?>
 
 <section class="container">
     <div class="m-5">
@@ -55,11 +54,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     </thead>
                     <tbody>
                         <?php
-                        foreach ($Product->getData('cart') as $item) :
+                        foreach ($Cart->getCart($user_id = $_SESSION['user_id'] ?? null) as $item) :
                             $cartItem = $Product->getProduct($item['item_id']);
                             $subTotal[] = array_map(function ($product) use ($item) {
                         ?>
-                                <tr>
+                                <tr data-id="<?php echo $product['item_id'] ?? '0'; ?>">
                                     <th class="fit align-middle" scope="row"><?php echo $product['name'] ?></th>
                                     <th class="fit align-middle">
 
@@ -79,8 +78,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     </td>
                                     <td class="align-middle">
                                         <form method="post">
-                                            <input type="hidden" name="item_id" value="<?php echo $product['item_id'] ?? 0; ?>">
-                                            <button type="submit" name="delete-cart-submit" class="btn btn-sm btn-danger align-middle">Delete</button>
+                                            <input type="hidden" name="item_id" value="<?php echo $product['item_id'] ?? null; ?>">
+                                            <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id'] ?? null; ?>">
+                                            <button name="delete-cart-submit" data-item="<?php echo $product['item_id'] ?? '0'; ?>" class="btn btn-sm btn-danger align-middle">Delete</button>
                                         </form>
                                     </td>
                                 </tr>
@@ -98,7 +98,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <h5 class="mb-0 pt-1 pb-1">Checkout</h5>
                     </div>
                     <div class="card-body">
-                        <h6 class="card-title">Subtotal - <b><?php echo isset($subTotal) ? count($Product->getData(table: 'cart')) : 0; ?></b> Items: <span class="text-success subTotal">
+                        <h6 class="card-title">Subtotal - <b class="totalQty"><?php echo isset($subTotal) ? count($Cart->getCart($user_id = $_SESSION['user_id'] ?? null)) : 0; ?></b> Items: <span class="text-success subTotal">
                                 <?php echo isset($subTotal) ? $Cart->getSum($subTotal) : 0; ?></span><span class="text-success"> Rs</span>
                         </h6>
                         <!-- <p class="card-text">With supporting text below as a natural lead-in to additional content.</p> -->

@@ -1,3 +1,8 @@
+<?php
+require('functions.php');
+// var_export($_SESSION['cart']);
+?>
+
 <head>
     <html lang="en">
     <meta charset="UTF-8">
@@ -29,7 +34,7 @@
                             </a>
                         </li>
                         <li class="nav-item ps-4">
-                            <a class="nav-link" href="cart.php">Cart <span class="badge rounded-pill bg-warning"><?php echo count($Product->getData(table: 'cart')) ?? '0'; ?></span></a>
+                            <a class="nav-link" href="cart.php">Cart <span class="badge rounded-pill bg-warning qty-badge"><?php echo count($Cart->getCart($user_id = $_SESSION['user_id'] ?? null)); ?></span></a>
                         </li>
                         <li class="nav-item ps-4">
                             <?php

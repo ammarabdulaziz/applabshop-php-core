@@ -1,9 +1,9 @@
 <?php
 
-session_start();
+if (session_status() == PHP_SESSION_NONE) session_start();
 require('functions.php');
 
-if (isset($_SESSION['username'])) {
+if (isset($_SESSION['user_id'])) {
     header("Location: index.php");
 }
 
@@ -44,20 +44,17 @@ if (isset($_POST['submit'])) {
         <form action="register.php" method="POST" class="login-email">
             <p class="login-text" style="font-size: 2rem; font-weight: 800;">Register</p>
             <div class="input-group">
-                <input type="text" placeholder="Name" name="name" value="<?php echo $_POST['name'] ?? '' ?>" required>
+                <input type="text" placeholder="Name" name="name" value="<?php echo $_POST['name'] ?? '' ?>">
                 <small style="color: red; margin: 1.5em;"><?php echo $errors['name'] ?></small>
             </div>
             <div class="input-group">
-                <input type="text" placeholder="Username" name="username" value="<?php echo $_POST['username'] ?? '' ?>" required>
+                <input type="text" placeholder="Username" name="username" value="<?php echo $_POST['username'] ?? '' ?>">
                 <small style="color: red; margin: 1.5em;"><?php echo $errors['username'] ?></small>
             </div>
             <div class="input-group">
-                <input type="password" placeholder="Password" name="password" value="<?php echo $_POST['password'] ?? '' ?>" required>
+                <input type="password" placeholder="Password" name="password" value="<?php echo $_POST['password'] ?? '' ?>">
                 <small style="color: red; margin: 1.5em;"><?php echo $errors['password'] ?></small>
             </div>
-            <!-- <div class="input-group">
-                <input type="password" placeholder="Confirm Password" name="cpassword" required>
-            </div> -->
             <div class="input-group">
                 <button name="submit" class="btn">Register</button>
             </div>
