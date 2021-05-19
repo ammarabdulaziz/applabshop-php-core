@@ -343,14 +343,14 @@
                 <span class="tooltip">Dashboard</span>
             </li>
             <li>
-                <a href="#">
+                <a href="admin.php">
                     <i class='bx bx-mobile-alt'></i>
                     <span class="links_name">Products</span>
                 </a>
                 <span class="tooltip">Products</span>
             </li>
             <li>
-                <a href="#">
+                <a href="products-add.php">
                     <i class='bx bxs-cart-add'></i>
                     <span class="links_name">Add Products</span>
                 </a>
