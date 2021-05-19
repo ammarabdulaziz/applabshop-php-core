@@ -279,6 +279,7 @@
 
         .home_content {
             position: absolute;
+            overflow-y: scroll;
             height: 100%;
             width: calc(100% - 78px);
             left: 78px;
@@ -292,6 +293,10 @@
         }
 
         .home_content .text {
+            position: fixed;
+            overflow: hidden;
+            top: 0;
+            width: 100%;
             font-size: 25px;
             font-weight: 500;
             color: #fff;
@@ -306,6 +311,12 @@
             width: calc(100% - 240px);
             left: 240px;
         }
+
+        ::-webkit-scrollbar {
+            width: 0px;
+            background: transparent;
+            /* make scrollbar transparent */
+        }
     </style>
 </head>
 
@@ -314,16 +325,16 @@
         <div class="logo_content">
             <div class="logo">
                 <i class='bx bxl-c-plus-plus'></i>
-                <div class="logo_name">CodingLab</div>
+                <div class="logo_name">ApplabShop</div>
             </div>
             <i class='bx bx-menu' id="btn"></i>
         </div>
         <ul class="nav_list" style="padding-left: 0px">
-            <li>
+            <!-- <li>
                 <i class='bx bx-search'></i>
                 <input type="text" placeholder="Search...">
                 <span class="tooltip">Search</span>
-            </li>
+            </li> -->
             <li>
                 <a href="#">
                     <i class='bx bx-grid-alt'></i>
@@ -333,40 +344,40 @@
             </li>
             <li>
                 <a href="#">
+                    <i class='bx bx-mobile-alt'></i>
+                    <span class="links_name">Products</span>
+                </a>
+                <span class="tooltip">Products</span>
+            </li>
+            <li>
+                <a href="#">
+                    <i class='bx bxs-cart-add'></i>
+                    <span class="links_name">Add Products</span>
+                </a>
+                <span class="tooltip">Add</span>
+            </li>
+            <li>
+                <a href="#">
                     <i class='bx bx-user'></i>
-                    <span class="links_name">User</span>
+                    <span class="links_name">Users</span>
                 </a>
-                <span class="tooltip">User</span>
+                <span class="tooltip">Users</span>
             </li>
-            <li>
-                <a href="#">
-                    <i class='bx bx-chat'></i>
-                    <span class="links_name">Messages</span>
-                </a>
-                <span class="tooltip">Messages</span>
-            </li>
-            <li>
-                <a href="#">
-                    <i class='bx bx-pie-chart-alt-2'></i>
-                    <span class="links_name">Analytics</span>
-                </a>
-                <span class="tooltip">Analytics</span>
-            </li>
-            <li>
+            <!-- <li>
                 <a href="#">
                     <i class='bx bx-folder'></i>
-                    <span class="links_name">File Manager</span>
+                    <span class="links_name">Orders</span>
                 </a>
-                <span class="tooltip">Files</span>
-            </li>
+                <span class="tooltip">Orders</span>
+            </li> -->
             <li>
                 <a href="#">
                     <i class='bx bx-cart-alt'></i>
-                    <span class="links_name">Order</span>
+                    <span class="links_name">Orders</span>
                 </a>
-                <span class="tooltip">Order</span>
+                <span class="tooltip">Orders</span>
             </li>
-            <li>
+            <!-- <li>
                 <a href="#">
                     <i class='bx bx-heart'></i>
                     <span class="links_name">Saved</span>
@@ -379,7 +390,7 @@
                     <span class="links_name">Setting</span>
                 </a>
                 <span class="tooltip">Setting</span>
-            </li>
+            </li> -->
         </ul>
         <div class="profile_content">
             <div class="profile">
@@ -396,7 +407,7 @@
     </div>
     <div class="home_content">
         <div class="text">
-            <p>Applab Shop</p>
+            <p style="margin-bottom: 0; font-weight: 200">Applab Shop</p>
         </div>
 
 

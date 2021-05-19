@@ -5,7 +5,7 @@
 
 <!DOCTYPE html>
 
-<?php include('templates/sidebar.php') ?>
+<?php include('../templates/sidebar.php') ?>
 
 <div class="m-5">
     <div class="page-header">
@@ -35,7 +35,7 @@
     </table>
 </div>
 
-<?php include('templates/footer.php') ?>
+<?php include('../templates/footer.php') ?>
 
 
 
