@@ -55,13 +55,8 @@ class Product
             $values = "'" . implode("','", array_values($params)) . "'";
 
             $query = sprintf("INSERT INTO %s(%s) VALUES(%s)", $table, $columns, $values);
-            // $query = "INSERT INTO product(name, brand, price, image, specs) VALUES('{$name}', '{$brand}', '{$price}', '{.png}', '{$specs}')";
-            // $query = "INSERT INTO product(name, brand, price, image, specs) VALUES('a','b',10, '.png', 'c')";
-
+            
             $result = $this->db->con->query($query);
-            // var_dump(mysqli_error($this->db->con));
-            // var_dump($columns, $values);
-            // exit;
             return $result;
         }
     }

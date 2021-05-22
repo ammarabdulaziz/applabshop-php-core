@@ -1,11 +1,9 @@
 <?php
 
-// $conn = mysqli_connect('localhost', 'root', '', 'applabshop');
-
-// if (!$conn) echo 'Connection err: ' . mysqli_connect_error();
 if (session_status() == PHP_SESSION_NONE) session_start();
 
 ?>
+
 
 <!DOCTYPE html>
 
@@ -20,17 +18,24 @@ if (session_status() == PHP_SESSION_NONE) session_start();
         color: #777 !important;
         font-weight: 200 !important;
     }
+
+    .closed {
+        display: none;
+    }
+
+    .show {
+        display: block;
+    }
 </style>
 
 <?php
 include('templates/header.php');
 $products = $Product->getData();
 
-// if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-//     if (isset($_POST['delete-cart-submit'])) {
-//         $deletedrecord = $Cart->deleteCart($_POST['user_id'], $_POST['item_id']);
-//     }
-// }
+if (isset($_GET['checkout']) && isset($_SESSION['user_id']) && count($Cart->getCart()) != 0) {
+    $Order->makeOrder();
+};
+
 ?>
 
 <section class="container">
@@ -38,10 +43,9 @@ $products = $Product->getData();
         <div class="page-header">
             <h3>Cart</h3>
         </div>
-
         <div class="row">
             <div class="col-8">
-                <table class="table">
+                <table id="cart-table" class="table closed <?php if (count($Cart->getCart())) echo 'show' ?>">
                     <thead>
                         <tr>
                             <th class="fit" scope="col">Title</th>
@@ -54,7 +58,7 @@ $products = $Product->getData();
                     </thead>
                     <tbody>
                         <?php
-                        foreach ($Cart->getCart($user_id = $_SESSION['user_id'] ?? null) as $item) :
+                        foreach ($Cart->getCart() as $item) :
                             $cartItem = $Product->getProduct($item['item_id']);
                             $subTotal[] = array_map(function ($product) use ($item) {
                         ?>
@@ -71,7 +75,7 @@ $products = $Product->getData();
 
                                     </th>
                                     <td class="align-middle"><?php echo $product['brand'] ?></td>
-                                    <td class="align-middle"><img src="<?php echo $product['image'] ?? "./products/1.png" ?>" style="height: 50px;" alt="cart1" class="img-fluid"></td>
+                                    <td class="align-middle"><img src="<?php echo $product['image'] ?>" style="height: 50px;" alt="public/images/1.png" class="img-fluid"></td>
                                     <td class="align-middle">
                                         <span data-id="<?php echo $product['item_id'] ?? '0'; ?>" class="productPrice"><?php echo $product['price'] * $item['qty'] ?>
                                         </span> Rs
@@ -85,26 +89,80 @@ $products = $Product->getData();
                                     </td>
                                 </tr>
                         <?php
-                                return [$product['price'], $item['qty']];
+                                return [$product['price'], $item['qty'], $item['item_id']];
                             }, $cartItem); // closing array_map function
                         endforeach;
                         ?>
                     </tbody>
                 </table>
-            </div>
-            <div class="col-4">
-                <div class="card">
-                    <div class="card-header">
-                        <h5 class="mb-0 pt-1 pb-1">Checkout</h5>
+                <div id="cart-empty" class="<?php if (count($Cart->getCart()) !== 0) echo 'closed' ?>">
+                    <div class="d-flex justify-content-center">
+                        <img src="public/images/empty_cart.png" height="250px" width="auto" alt="">
                     </div>
-                    <div class="card-body">
-                        <h6 class="card-title">Subtotal - <b class="totalQty"><?php echo isset($subTotal) ? count($Cart->getCart($user_id = $_SESSION['user_id'] ?? null)) : 0; ?></b> Items: <span class="text-success subTotal">
-                                <?php echo isset($subTotal) ? $Cart->getSum($subTotal) : 0; ?></span><span class="text-success"> Rs</span>
-                        </h6>
-                        <!-- <p class="card-text">With supporting text below as a natural lead-in to additional content.</p> -->
-                        <a href="#" class="btn btn-sm btn-primary mt-2">Proceed to Buy</a>
+                    <div class="d-flex justify-content-center mt-2">
+                        <h4>Your cart is empty</h4>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <a href="index.php" class="btn btn-success">Shop Now</a>
                     </div>
                 </div>
+            </div>
+            <div class="col-4">
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <h5 class="mb-0 pt-1 pb-1">Payment Type</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-check pb-1">
+                            <input class="form-check-input" type="radio" name="exampleRadios" value="Cod" checked>
+                            <label class="form-check-label" for="exampleRadios2">
+                                Cash on delivery
+                            </label>
+                        </div>
+                        <div class="form-check pb-1">
+                            <input class="form-check-input" type="radio" name="exampleRadios" value="Upi">
+                            <label class="form-check-label" for="exampleRadios1">
+                                UPI Gateway
+                            </label>
+                        </div>
+                        <div class="form-check disabled">
+                            <input class="form-check-input" type="radio" name="exampleRadios" value="Card">
+                            <label class="form-check-label" for="exampleRadios3">
+                                Debit/Credit card
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="card" style="width: 100%">
+                    <div class="card-body">
+                        <h5 class="card-title pt-1 pb-2">Checkout</h5>
+                        <h6 class="card-title">Subtotal - <b class="totalQty"><?php echo isset($subTotal) ? count($Cart->getCart()) : 0; ?></b> Items: <span class="text-success subTotal">
+                                <?php echo isset($subTotal) ? $Cart->getSum($subTotal) : 0; ?></span><span class="text-success"> Rs</span>
+                        </h6>
+                        <a onclick="<?php if (isset($subTotal)) $_SESSION['totalCart'] = $subTotal; ?> return confirm_order(<?php echo count($Cart->getCart()) ?>, <?php echo isset($_SESSION['user_id']) ?>)" href="cart.php?checkout=true" class="btn btn-sm btn-primary mt-2 checkoutBtn">
+                            Proceed to Buy
+                        </a>
+                    </div>
+                </div>
+
+                <script>
+                    function confirm_order(count, isLoggedIn) {
+                        if (count === 0) {
+                            alert('Your cart is empty.');
+                            return false;
+                        } else if (!confirm("Would you like to proceed you order?")) {
+                            return false;
+                        } else if (isLoggedIn !== 1) {
+                            window.location.href = 'login.php?checkout=true';
+                            return false;
+                        } else if (isLoggedIn === 1) {
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    }
+                </script>
+
             </div>
         </div>
     </div>

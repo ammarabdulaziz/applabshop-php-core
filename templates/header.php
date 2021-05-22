@@ -1,6 +1,6 @@
 <?php
 require('functions.php');
-// var_export($_SESSION['cart']);
+// var_export($_SESSION['totalCart']);
 ?>
 
 <head>
@@ -12,8 +12,8 @@ require('functions.php');
 
     <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous"> -->
-    <link rel="stylesheet" href="templates/bootstrap/bootstrap.css">
-    <link rel="stylesheet" href="templates/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="public/bootstrap/bootstrap.css">
+    <link rel="stylesheet" href="public/bootstrap/bootstrap.min.css">
 
 <body>
 
@@ -34,7 +34,7 @@ require('functions.php');
                             </a>
                         </li>
                         <li class="nav-item ps-4">
-                            <a class="nav-link" href="cart.php">Cart <span class="badge rounded-pill bg-warning qty-badge"><?php echo count($Cart->getCart($user_id = $_SESSION['user_id'] ?? null)); ?></span></a>
+                            <a class="nav-link" href="cart.php">Cart <span class="badge rounded-pill bg-warning qty-badge"><?php echo count($Cart->getCart()); ?></span></a>
                         </li>
                         <li class="nav-item ps-4">
                             <?php

@@ -70,52 +70,72 @@ $(document).ready(function () {
     const product_id = $(this).data('item');
     const user_id = $('input[name="user_id"]').val();
 
-    console.log(parseInt(user_id));
-    console.log(parseInt(product_id));
+    // Get item price
+    $.ajax({
+      url: 'templates/ajax.php',
+      type: 'post',
+      data: { item_id: product_id, getPrice: true },
+      success: function (result) {
+        let obj = JSON.parse(result);
+        let price = obj[0].price;
 
-    if (user_id) {
-      $.ajax({
-        url: 'templates/ajax.php',
-        type: 'post',
-        data: {
-          product_id: parseInt(product_id),
-          user_id: parseInt(user_id),
-          addCart: true,
-        },
-        success: function (result) {
-          $(this).addClass('disabled');
+        if (user_id) {
+          console.log(price);
+          $.ajax({
+            url: 'templates/ajax.php',
+            type: 'post',
+            data: {
+              product_id: parseInt(product_id),
+              user_id: parseInt(user_id),
+              price,
+              addCart: true,
+            },
+            success: function (result) {
+              $(this).addClass('disabled');
 
-          $(`[data-item="${product_id}"]`).addClass('btn-dark').addClass('disabled');
-          $(`[data-item="${product_id}"]`).html('Added to cart');
+              $(`[data-item="${product_id}"]`).addClass('btn-dark').addClass('disabled');
+              $(`[data-item="${product_id}"]`).html('Added to cart');
 
-          let qty = $('.qty-badge').html();
-          $('.qty-badge').html(parseInt(qty) + 1);
-        },
-      });
-    } else {
-      $.ajax({
-        url: 'templates/ajax.php',
-        type: 'post',
-        data: {
-          product_id: parseInt(product_id),
-          user_id: null,
-          addCart: true,
-        },
-        success: function (result) {
-          $(this).addClass('disabled');
+              let qty = $('.qty-badge').html();
+              $('.qty-badge').html(parseInt(qty) + 1);
+            },
+          });
+        } else {
+          $.ajax({
+            url: 'templates/ajax.php',
+            type: 'post',
+            data: {
+              product_id: parseInt(product_id),
+              user_id: null,
+              price: parseInt(price),
+              addCart: true,
+            },
+            success: function (result) {
+              $(this).addClass('disabled');
 
-          $(`[data-item="${product_id}"]`).addClass('btn-dark').addClass('disabled');
-          $(`[data-item="${product_id}"]`).html('Added to cart');
+              $(`[data-item="${product_id}"]`).addClass('btn-dark').addClass('disabled');
+              $(`[data-item="${product_id}"]`).html('Added to cart');
 
-          let qty = $('.qty-badge').html();
-          $('.qty-badge').html(parseInt(qty) + 1);
-        },
-      });
-    }
+              let qty = $('.qty-badge').html();
+              $('.qty-badge').html(parseInt(qty) + 1);
+            },
+          });
+        }
+      },
+    });
   });
 
+  let rowCount = $('#cart-table tbody tr').length;
+  console.log(rowCount);
   $('button[name="delete-cart-submit"]').click(function (e) {
     e.preventDefault();
+
+    rowCount = rowCount - 1;
+    console.log(rowCount);
+    if (rowCount === 0) {
+      $('#cart-table').removeClass('show').addClass('closed');
+      $('#cart-empty').addClass('show');
+    }
 
     const product_id = parseInt($(this).data('item'));
     const user_id = parseInt($('input[name="user_id"]').val());
@@ -123,19 +143,12 @@ $(document).ready(function () {
     const subTotal = parseInt($('.subTotal').html());
     const totalQty = parseInt($('.totalQty').html());
 
-    console.log(user_id);
-    console.log(product_id);
-    console.log(price);
-    console.log(subTotal);
-    console.log(totalQty);
-
     if (user_id) {
       $.ajax({
         url: 'templates/ajax.php',
         type: 'post',
         data: {
           product_id: parseInt(product_id),
-          user_id: parseInt(user_id),
           deleteCart: true,
         },
         success: function (result) {
@@ -155,7 +168,6 @@ $(document).ready(function () {
         data: {
           product_id: product_id,
           deleteCart: true,
-          user_id: null,
         },
         success: function (result) {
           $(`tr[data-id=${product_id}]`).hide();

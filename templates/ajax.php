@@ -11,7 +11,7 @@ $Cart = new Cart($db);
 if (session_status() == PHP_SESSION_NONE) session_start();
 
 if (isset($_POST['deleteCart'])) {
-    $result = $result = $Cart->deleteCart($_POST['user_id'], $_POST['product_id']);
+    $result = $result = $Cart->deleteCart($_POST['product_id']);
     echo json_encode($result);
 }
 
@@ -21,11 +21,15 @@ if (isset($_POST['qtyDec']) || isset($_POST['qtyInc'])) {
 }
 
 if (isset($_POST['addCart'])) {
-    $result = $Cart->addToCart($_POST['user_id'], $_POST['product_id']);
+    $result = $Cart->addToCart($_POST['product_id'], $_POST['price']);
     echo json_encode($result);
 }
 
 if (isset($_POST['getPrice'])) {
     $result = $Product->getProduct($_POST['item_id']);
     echo json_encode($result);
+}
+
+if (isset($_POST['addTotalCartToSession'])) {
+    header("Location: cart.php?checkout=true");
 }

@@ -8,6 +8,7 @@ if (isset($_SESSION['user_id'])) {
 }
 
 $errors = array('name' => '', 'username' => '', 'password' => '');
+$checkout = isset($_GET['checkout']) && $_GET['checkout'] == 'true' ? true : null;
 
 if (isset($_POST['submit'])) {
 
@@ -19,7 +20,7 @@ if (isset($_POST['submit'])) {
     $username = $_POST['username'];
     $password = md5($_POST['password']);
 
-    if (!array_filter($errors)) $errors['username'] = $User->createUser($name, $username, $password, $errors);
+    if (!array_filter($errors)) $errors['username'] = $User->createUser($name, $username, $password, $checkout, $errors);
 }
 
 
@@ -33,7 +34,7 @@ if (isset($_POST['submit'])) {
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
-    <link rel="stylesheet" type="text/css" href="templates/style.css">
+    <link rel="stylesheet" type="text/css" href="public/stylesheets/style.css">
 
 
     <title>Applab Shop | Register</title>
@@ -41,7 +42,7 @@ if (isset($_POST['submit'])) {
 
 <body>
     <div class="container">
-        <form action="register.php" method="POST" class="login-email">
+        <form action="register.php<?php if (isset($checkout)) echo '?checkout=true' ?>" method="POST" class="login-email">
             <p class="login-text" style="font-size: 2rem; font-weight: 800;">Register</p>
             <div class="input-group">
                 <input type="text" placeholder="Name" name="name" value="<?php echo $_POST['name'] ?? '' ?>">
@@ -58,7 +59,7 @@ if (isset($_POST['submit'])) {
             <div class="input-group">
                 <button name="submit" class="btn">Register</button>
             </div>
-            <p class="login-register-text">Have an account? <a href="login.php">Login Here</a>.</p>
+            <p class="login-register-text">Have an account? <a href="login.php<?php if (isset($checkout)) echo '?checkout=true' ?>">Login Here</a>.</p>
         </form>
     </div>
 </body>

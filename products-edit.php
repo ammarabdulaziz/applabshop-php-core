@@ -3,15 +3,22 @@ if (session_status() == PHP_SESSION_NONE) session_start();
 
 require('functions.php');
 
+$product = $Product->getProduct($_GET['id']);
+
 $errors = array('name' => '', 'brand' => '', 'price' => '', 'specs' => '', 'image' => '');
 $name = $brand = $price = $image = $specs = '';
+
+$name = $product[0]['name'];
+$brand = $product[0]['brand'];
+$price = $product[0]['price'];
+$specs = $product[0]['specs'];
+$image = $product[0]['image'];
 
 if (isset($_POST['submit'])) {
     // Check name 
     if (empty($_POST['name'])) {
         $errors['name'] = 'Name is empty <br>';
     } else {
-        $name = $_POST['name'];
         if (!preg_match('/^[a-zA-Z\s]+$/', $name)) {
             $errors['name'] = 'Name should be letters and spaced only <br>';
         }
@@ -21,7 +28,6 @@ if (isset($_POST['submit'])) {
     if (empty($_POST['brand'])) {
         $errors['brand'] = 'Brand is empty <br>';
     } else {
-        $brand = $_POST['brand'];
         if (!preg_match('/^[a-zA-Z\s]+$/', $brand)) {
             $errors['brand'] = 'Brand should be letters and spaced only <br>';
         }
@@ -31,7 +37,6 @@ if (isset($_POST['submit'])) {
     if (empty($_POST['price'])) {
         $errors['price'] = 'Price is empty <br>';
     } else {
-        $price = $_POST['price'];
         if (!preg_match('/^[0-9\s]+$/', $price)) {
             $errors['price'] = 'Price should be numbers only <br>';
         }
@@ -41,7 +46,6 @@ if (isset($_POST['submit'])) {
     if (empty($_POST['specs'])) {
         $errors['specs'] = 'Enter atleast one specification <br>';
     } else {
-        $specs = $_POST['specs'];
         if (!preg_match('/^([a-zA-Z\s]+)(,\s*[a-zA-Z\s]*)*$/', $specs)) {
             $errors['specs'] = 'Specifications should be coma seperated <br>';
         }
@@ -82,21 +86,12 @@ if (isset($_POST['submit'])) {
 
 <!DOCTYPE html>
 
-<style>
-    .hide {
-        display: none;
-    }
-
-    .show {
-        display: block;
-    }
-</style>
-
 
 <?php include('templates/sidebar.php'); ?>
+
 <section class="container" style="margin-top: 6em !important;">
     <div class="page-header mt-5">
-        <h3 id="forms">Add a Product</h3>
+        <h3 id="forms">Edit Product</h3>
     </div>
     <form action="products-add.php" method="POST" enctype="multipart/form-data">
         <div class="form-group row mt-4">
@@ -131,27 +126,10 @@ if (isset($_POST['submit'])) {
         <div class="form-group row mt-4">
             <label class="col-sm-2 col-form-label">Image</label>
             <div class="col-md-6">
-                <input type="file" id="upload" onchange="readURL(this)" name="image" class="form-control-file"><br>
+                <input type="file" name="image" class="form-control-file"><br>
                 <small class="text-danger"><?php echo $errors['image'] ?></small>
-                <img id="img" class="pt-3 hide" alt="1.png" height="100px" width="auto" style="box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;">
+                <img id="img" src="<?php echo $image; ?>" class="pt-3 hide" alt="1.png" height="100px" width="auto" style="box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;">
             </div>
-            <script>
-                function readURL(input) {
-                    var url = input.value;
-                    var ext = url.substring(url.lastIndexOf('.') + 1).toLowerCase();
-                    if (input.files && input.files[0] && (ext == "gif" || ext == "png" || ext == "jpeg" || ext == "jpg")) {
-                        var reader = new FileReader();
-
-                        reader.onload = function(e) {
-                            $('#img').addClass('show').attr('src', e.target.result);
-                        }
-
-                        reader.readAsDataURL(input.files[0]);
-                    } else {
-                        $('#img').attr('src', '/assets/no_preview.png');
-                    }
-                }
-            </script>
         </div>
         <div class="form-group row mt-3">
             <div class="offset-sm-2 col-sm-10">

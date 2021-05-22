@@ -210,3 +210,6 @@ body {
 .closed {
   display: none;
 }
+.show {
+  display: block;
+}
