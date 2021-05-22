@@ -30,6 +30,7 @@ if (isset($_POST['getPrice'])) {
     echo json_encode($result);
 }
 
-if (isset($_POST['addTotalCartToSession'])) {
-    header("Location: cart.php?checkout=true");
+if (isset($_POST['deleteProduct'])) {
+    $result = $Product->deleteProduct($_POST['id'], $_POST['image']);
+    echo json_encode($result);
 }

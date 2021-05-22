@@ -97,7 +97,7 @@ if (isset($_GET['checkout']) && isset($_SESSION['user_id']) && count($Cart->getC
                 </table>
                 <div id="cart-empty" class="<?php if (count($Cart->getCart()) !== 0) echo 'closed' ?>">
                     <div class="d-flex justify-content-center">
-                        <img src="public/images/empty_cart.png" height="250px" width="auto" alt="">
+                        <img src="public/static/empty_cart.png" height="250px" width="auto" alt="">
                     </div>
                     <div class="d-flex justify-content-center mt-2">
                         <h4>Your cart is empty</h4>

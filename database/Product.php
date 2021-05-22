@@ -85,4 +85,15 @@ class Product
             return $result;
         }
     }
+
+    public function deleteProduct($id, $image, $table = 'product')
+    {
+        if (isset($id)) {
+            $query = "DELETE FROM product WHERE item_id=$id";
+            $result = $this->db->con->query($query);
+
+            unlink('../' . $image);
+            return $result;
+        }
+    }
 }
