@@ -117,9 +117,6 @@
                     btn.classList.replace("bx-menu-alt-right", "bx-menu");
                 }
             }
-            searchBtn.onclick = function() {
-                sidebar.classList.toggle("active");
-            }
             homeContent.onclick = function() {
                 btn.classList.replace("bx-menu-alt-right", "bx-menu");
                 sidebar.classList.remove("active");

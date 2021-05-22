@@ -55,8 +55,33 @@ class Product
             $values = "'" . implode("','", array_values($params)) . "'";
 
             $query = sprintf("INSERT INTO %s(%s) VALUES(%s)", $table, $columns, $values);
-            
+
             $result = $this->db->con->query($query);
+            return $result;
+        }
+    }
+
+    public function editProduct($id, $name, $brand, $price, $specs, $path, $table = 'product')
+    {
+        if (isset($name) && isset($brand) && isset($price) && isset($specs)) {
+            $params = [
+                "item_id" => $id,
+                "name" => $name,
+                "brand" => $brand,
+                "image" => $path,
+                "specs" => $specs,
+                "price" => $price
+            ];
+
+            // $columns = implode(',', array_keys($params));
+            // $values = "'" . implode("','", array_values($params)) . "'";
+
+            $query = "UPDATE product SET name='$name', brand='$brand', image='$path', specs='$specs', price=$price WHERE item_id=$id";
+
+            $result = $this->db->con->query($query);
+            // echo $query;
+            // var_dump(mysqli_error($this->db->con));
+            // exit;
             return $result;
         }
     }
