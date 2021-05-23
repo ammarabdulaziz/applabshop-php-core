@@ -27,7 +27,7 @@ $products = $Product->getData();
                             <?php }
                             ?>
                         </p>
-                        <h4><?php echo $product['price'] . ' Rs' ?? 'Unkown' ?></h4>
+                        <h4><?php echo $product['price'] . ' Qr' ?? 'Unkown' ?></h4>
                         <form method="post">
                             <!-- <input type="hidden" name="item_id" value="<?php echo $product['item_id'] ?? '1'; ?>"> -->
                             <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id'] ?? null; ?>">

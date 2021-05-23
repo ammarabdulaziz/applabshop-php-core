@@ -57,4 +57,38 @@ class Order
             }
         }
     }
+
+    public function getData()
+    {
+        $query = "SELECT * FROM order_table, user WHERE order_table.user_id =  user.user_id";
+        $result = $this->db->con->query($query);
+
+        $resultArray = array();
+        while ($item = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+            $resultArray[] = $item;
+        }
+        return $resultArray;
+    }
+
+    public function getOrderItems()
+    {
+        $query = "SELECT * FROM order_table, order_items, product WHERE order_table.order_id =  order_items.order_id AND order_items.item_id = product.item_id";
+        $result = $this->db->con->query($query);
+
+        $resultArray = array();
+        while ($item = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+            $resultArray[] = $item;
+        }
+        return $resultArray;
+    }
+
+    public function updateStatus($id, $status)
+    {
+        if (isset($id) && isset($status)) {
+            $query = "UPDATE order_table SET status='$status' WHERE order_id=$id";
+
+            $result = $this->db->con->query($query);
+            return $result;
+        }
+    }
 }

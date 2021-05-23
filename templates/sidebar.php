@@ -1,3 +1,9 @@
+<?php
+if (session_status() == PHP_SESSION_NONE) session_start();
+if (!isset($_SESSION['admin'])) header('Location: login.php');
+require('functions.php');
+?>
+
 <head>
     <html lang="en" dir="ltr">
     <meta charset="UTF-8">
@@ -6,12 +12,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet" href="public/stylesheets/sidebar.css">
-    <link rel="stylesheet" href="public/bootstrap/bootstrap.css">
-    <link rel="stylesheet" href="public/bootstrap/bootstrap.min.css">
-    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
 </head>
 
 <body>
+    <div class="loader-wrapper">
+        <span class="loader"><span class="loader-inner"></span></span>
+    </div>
     <div class="sidebar">
         <div class="logo_content">
             <div class="logo">
@@ -48,7 +56,7 @@
                 <span class="tooltip">Add</span>
             </li> -->
             <li>
-                <a href="#">
+                <a href="users-list.php">
                     <i class='bx bx-user'></i>
                     <span class="links_name">Users</span>
                 </a>
@@ -62,7 +70,7 @@
                 <span class="tooltip">Orders</span>
             </li> -->
             <li>
-                <a href="#">
+                <a href="orders-list.php">
                     <i class='bx bx-cart-alt'></i>
                     <span class="links_name">Orders</span>
                 </a>
@@ -86,13 +94,13 @@
         <div class="profile_content">
             <div class="profile">
                 <div class="profile_details">
-                    <img src="profile.jpg" alt="">
+                    <img src="" alt="">
                     <div class="name_job">
                         <div class="name">Prem Shahi</div>
                         <div class="job">Web Designer</div>
                     </div>
                 </div>
-                <i class='bx bx-log-out' id="log_out"></i>
+                <a href="logout.php"><i class='bx bx-log-out' id="log_out"></i></a>
             </div>
         </div>
     </div>

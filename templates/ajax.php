@@ -3,10 +3,12 @@
 require('../database/DBController.php');
 require('../database/Product.php');
 require('../database/Cart.php');
+require('../database/Order.php');
 
 $db = new DBController();
 $Product = new Product($db);
 $Cart = new Cart($db);
+$Order = new Order($db);
 
 if (session_status() == PHP_SESSION_NONE) session_start();
 
@@ -32,5 +34,10 @@ if (isset($_POST['getPrice'])) {
 
 if (isset($_POST['deleteProduct'])) {
     $result = $Product->deleteProduct($_POST['id'], $_POST['image']);
+    echo json_encode($result);
+}
+
+if (isset($_POST['updateOrderStatus'])) {
+    $result = $Order->updateStatus($_POST['order_id'], $_POST['status']);
     echo json_encode($result);
 }

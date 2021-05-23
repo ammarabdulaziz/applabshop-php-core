@@ -9,8 +9,6 @@ if (isset($_SESSION['user_id'])) {
 
 $errors = array('name' => '', 'username' => '', 'password' => '');
 $checkout = isset($_GET['checkout']) && $_GET['checkout'] == 'true' ? true : null;
-// var_dump(isset($checkout));
-// exit;
 
 if (isset($_POST['submit'])) {
     if (empty($_POST['username'])) $errors['username'] = 'Username is empty';

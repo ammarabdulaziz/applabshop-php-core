@@ -16,7 +16,9 @@ require('functions.php');
     <link rel="stylesheet" href="public/bootstrap/bootstrap.min.css">
 
 <body>
-
+    <div class="loader-wrapper">
+        <span class="loader"><span class="loader-inner"></span></span>
+    </div>
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container container-fluid">
             <a class="navbar-brand" href="index.php">Applab Shop</a>

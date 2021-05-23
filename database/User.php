@@ -58,6 +58,11 @@ class User
         if ($result->num_rows > 0) {
             $user = mysqli_fetch_array($result, MYSQLI_ASSOC);
 
+            if ($user['type'] == 'admin') {
+                $_SESSION['admin'] = $user['user_id'];
+                return header("Location: admin.php");
+            }
+
             $_SESSION['user_id'] = $user['user_id'];
 
             if (isset($checkout)) {
@@ -85,8 +90,6 @@ class User
                         $query = "INSERT INTO cart(user_id, item_id, qty, createdAt) VALUES ('{$user_id}', '{$item_id}','{$qty}','{$createdAt}')";
 
                         $result = $this->db->con->query($query);
-                        // var_dump(mysqli_error($this->db->con));
-                        // exit;
                     }
                 }
 

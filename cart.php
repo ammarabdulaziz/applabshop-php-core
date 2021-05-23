@@ -78,7 +78,7 @@ if (isset($_GET['checkout']) && isset($_SESSION['user_id']) && count($Cart->getC
                                     <td class="align-middle"><img src="<?php echo $product['image'] ?>" style="height: 50px;" alt="public/images/1.png" class="img-fluid"></td>
                                     <td class="align-middle">
                                         <span data-id="<?php echo $product['item_id'] ?? '0'; ?>" class="productPrice"><?php echo $product['price'] * $item['qty'] ?>
-                                        </span> Rs
+                                        </span> Qr
                                     </td>
                                     <td class="align-middle">
                                         <form method="post">
@@ -137,7 +137,7 @@ if (isset($_GET['checkout']) && isset($_SESSION['user_id']) && count($Cart->getC
                     <div class="card-body">
                         <h5 class="card-title pt-1 pb-2">Checkout</h5>
                         <h6 class="card-title">Subtotal - <b class="totalQty"><?php echo isset($subTotal) ? count($Cart->getCart()) : 0; ?></b> Items: <span class="text-success subTotal">
-                                <?php echo isset($subTotal) ? $Cart->getSum($subTotal) : 0; ?></span><span class="text-success"> Rs</span>
+                                <?php echo isset($subTotal) ? $Cart->getSum($subTotal) : 0; ?></span><span class="text-success"> Qr</span>
                         </h6>
                         <a onclick="<?php if (isset($subTotal)) $_SESSION['totalCart'] = $subTotal; ?> return confirm_order(<?php echo count($Cart->getCart()) ?>, <?php echo isset($_SESSION['user_id']) ?>)" href="cart.php?checkout=true" class="btn btn-sm btn-primary mt-2 checkoutBtn">
                             Proceed to Buy

@@ -6,5 +6,4 @@
 <?php include('products.php') ?>
 <?php include('templates/footer.php') ?>
 
-
 </html>

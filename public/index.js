@@ -126,7 +126,6 @@ $(document).ready(function () {
   });
 
   let rowCount = $('#cart-table tbody tr').length;
-  console.log(rowCount);
   $('button[name="delete-cart-submit"]').click(function (e) {
     e.preventDefault();
 
@@ -135,6 +134,7 @@ $(document).ready(function () {
     if (rowCount === 0) {
       $('#cart-table').removeClass('show').addClass('closed');
       $('#cart-empty').addClass('show');
+      $('.checkoutBtn').attr('onclick', 'return confirm_order(0)');
     }
 
     const product_id = parseInt($(this).data('item'));
@@ -180,5 +180,38 @@ $(document).ready(function () {
         },
       });
     }
+  });
+
+  // Status update
+  $('.btn-sts-upt').on('click', function (e) {
+    e.preventDefault();
+    let order_id = $(this).parent().data('id');
+    let status = $(this).attr('data-original-title');
+    console.log('Api called', status);
+
+    $.ajax({
+      url: 'templates/ajax.php',
+      type: 'post',
+      data: {
+        order_id,
+        status,
+        updateOrderStatus: true,
+      },
+      success: function (result) {
+        if (status == 'Shipped') {
+          $(`td.${order_id}`).removeClass('text-danger text-success').addClass('text-warning').html(status);
+        }
+        if (status == 'Delivered') {
+          $(`td.${order_id}`).removeClass('text-danger text-warning').addClass('text-success').html(status);
+        }
+        if (status == 'Pending') {
+          $(`td.${order_id}`).removeClass('text-warning text-success').addClass('text-danger').html(status);
+        }
+      },
+    });
+  });
+
+  $(window).on('load', function () {
+    $('.loader-wrapper').fadeOut();
   });
 });
