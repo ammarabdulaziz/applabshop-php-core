@@ -4823,10 +4823,10 @@ fieldset:disabled .btn {
   background-color: #ecf0f1;
 }
 .list-group-item.active {
-  z-index: 2;
+  z-index: 1;
   color: #fff;
-  background-color: #2c3e50;
-  border-color: #2c3e50;
+  background-color: #EDF1F2;
+  border-color: #EDF1F2;
 }
 .list-group-item + .list-group-item {
   border-top-width: 0;

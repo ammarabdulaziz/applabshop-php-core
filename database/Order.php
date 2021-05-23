@@ -85,10 +85,48 @@ class Order
     public function updateStatus($id, $status)
     {
         if (isset($id) && isset($status)) {
-            $query = "UPDATE order_table SET status='$status' WHERE order_id=$id";
+            $query = "UPDATE order_table 
+            SET status='$status' 
+            WHERE order_id=$id";
 
             $result = $this->db->con->query($query);
             return $result;
+        }
+    }
+
+    public function getMyOrders()
+    {
+        if (isset($_SESSION['user_id'])) {
+            $query = "SELECT * FROM order_table, user 
+            WHERE order_table.user_id={$_SESSION['user_id']} 
+            AND order_table.user_id =  user.user_id";
+
+            $result = $this->db->con->query($query);
+
+            $resultArray = array();
+            while ($item = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+                $resultArray[] = $item;
+            }
+            // print("<pre>" . print_r($resultArray, true) . "</pre>");
+            // exit;
+            return $resultArray;
+        }
+    }
+
+    public function getMyOrdersItems()
+    {
+        if (isset($_SESSION['user_id'])) {
+            $query = "SELECT * FROM order_table, order_items, product WHERE order_table.user_id={$_SESSION['user_id']} AND order_table.order_id =  order_items.order_id AND order_items.item_id = product.item_id";
+
+            $result = $this->db->con->query($query);
+
+            $resultArray = array();
+            while ($item = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+                $resultArray[] = $item;
+            }
+            // print("<pre>" . print_r($resultArray, true) . "</pre>");
+            // exit;
+            return $resultArray;
         }
     }
 }

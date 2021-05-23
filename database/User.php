@@ -50,7 +50,7 @@ class User
         }
     }
 
-    public function loginUser($username, $password, $checkout)
+    public function loginUser($username, $password, $checkout, $orders)
     {
         $sql = "SELECT * FROM user WHERE username='{$username}' AND password='{$password}'";
         $result = mysqli_query($this->db->con, $sql);
@@ -95,6 +95,8 @@ class User
 
                 unset($_SESSION['cart']);
                 header("Location: cart.php");
+            } else if (isset($orders)) {
+                header("Location: orders.php");
             } else {
                 header("Location: index.php");
             }
