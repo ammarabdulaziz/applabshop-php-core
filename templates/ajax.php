@@ -5,10 +5,10 @@ require('../database/Product.php');
 require('../database/Cart.php');
 require('../database/Order.php');
 
-$db = new DBController();
-$Product = new Product($db);
-$Cart = new Cart($db);
-$Order = new Order($db);
+// $db = new DBController();
+$Product = new Product();
+$Cart = new Cart();
+$Order = new Order();
 
 if (session_status() == PHP_SESSION_NONE) session_start();
 

@@ -1,3 +1,9 @@
+<?php
+//if (session_status() == PHP_SESSION_NONE) session_start();
+//if (!isset($_SESSION['admin'])) header('Location: login.php');
+//require('functions.php');
+?>
+
 <head>
     <html lang="en" dir="ltr">
     <meta charset="UTF-8">
@@ -5,15 +11,15 @@
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="public/stylesheets/sidebar.css">
+    <link rel="stylesheet" href="../../public/stylesheets/sidebar.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
 </head>
 
 <body>
-    <div class="loader-wrapper">
+    <!-- <div class="loader-wrapper">
         <span class="loader"><span class="loader-inner"></span></span>
-    </div>
+    </div> -->
     <div class="sidebar">
         <div class="logo_content">
             <div class="logo">
@@ -36,7 +42,7 @@
                 <span class="tooltip">Dashboard</span>
             </li>
             <li>
-                <a href="products.php">
+                <a href="/applabshop/admin/products/index.php">
                     <i class='bx bx-mobile-alt'></i>
                     <span class="links_name">Products</span>
                 </a>
@@ -50,7 +56,7 @@
                 <span class="tooltip">Add</span>
             </li> -->
             <li>
-                <a href="users-list.php">
+                <a href="/applabshop/admin/users/index.php">
                     <i class='bx bx-user'></i>
                     <span class="links_name">Users</span>
                 </a>
@@ -64,7 +70,7 @@
                 <span class="tooltip">Orders</span>
             </li> -->
             <li>
-                <a href="orders-list.php">
+                <a href="/applabshop/admin/orders/index.php">
                     <i class='bx bx-cart-alt'></i>
                     <span class="links_name">Orders</span>
                 </a>

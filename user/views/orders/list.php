@@ -1,20 +1,4 @@
-<?php
-
-if (session_status() == PHP_SESSION_NONE) session_start();
-if (!isset($_SESSION['user_id'])) header('Location: login.php?order=true');
-
-?>
-
-
-<!DOCTYPE html>
-
-
-<?php
-include('templates/header.php');
-$myOrders = $Order->getMyOrders();
-$myOrdersItems = $Order->getMyOrdersItems();
-
-?>
+<?php include('../views/header.php'); ?>
 
 
 <style>
@@ -79,7 +63,8 @@ $myOrdersItems = $Order->getMyOrdersItems();
                         <div class="d-flex">
                             <div>
                                 <p class="text-secondary">ORDER PLACED</p>
-                                <p class="pt-1"><?php echo $order['createdAt'] ?></p>
+                                <p class="pt-1"><?php $date = new DateTime($order['createdAt']);
+                                                echo $date->format('j F o') ?></p>
                             </div>
                             <div class="new-card-comp">
                                 <p class="text-secondary">QTY</p>
@@ -107,7 +92,7 @@ $myOrdersItems = $Order->getMyOrdersItems();
                     <div class="list-group-item flex-column align-items-start new-card-body p-3">
                         <div class="d-flex justify-content-between">
                             <div class="d-flex col-md-5">
-                                <img class="new-card-img" src="public/images/1.png" alt="" />
+                                <img class="new-card-img" src="<?php echo $item['image'] ?>" alt="" />
                                 <div class="new-card-comp">
                                     <h6 class="mb-0 new-card-body-title"><?php echo $item['name'] ?></h6>
                                     <h6 class="text-secondary pt-1"><?php echo $item['brand'] ?></h6>
@@ -135,7 +120,7 @@ $myOrdersItems = $Order->getMyOrdersItems();
                             <div class="d-flex">
                                 <div class="d-flex align-items-end flex-column">
                                     <h6>Subtotal : <?php echo $item['qty'] * $item['item_price'] ?> Qr</h6>
-                                    <a href="<?php echo 'index.php' ?>" class="btn btn-block btn-primary new-card-body-btn p-1">Buy Again</a>
+                                    <a href="<?php echo '/applabshop/user/products/index.php' ?>" class="btn btn-block btn-primary new-card-body-btn p-1">Buy Again</a>
                                     <button class="btn btn-block btn-secondary new-card-body-btn mt-2 p-1">Invoice</button>
                                 </div>
                             </div>
@@ -144,9 +129,22 @@ $myOrdersItems = $Order->getMyOrdersItems();
                 <?php } ?>
             </div>
         <?php } ?>
+        <?php if (count($myOrders) == 0) { ?>
+            <div id="cart-empty">
+                <div class="d-flex justify-content-center">
+                    <img src="../../public/static/empty_cart.png" height="250px" width="auto" alt="">
+                </div>
+                <div class="d-flex justify-content-center mt-2">
+                    <h4>Your don't have any orders</h4>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <a href="/applabshop/user/products/index.php" class="btn btn-success">Shop Now</a>
+                </div>
+            </div>
+        <?php } ?>
     </div>
 </section>
 
-<?php include('templates/footer.php') ?>
+<?php include('../views/footer.php') ?>
 
 </html>

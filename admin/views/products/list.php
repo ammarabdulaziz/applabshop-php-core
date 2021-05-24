@@ -1,21 +1,11 @@
-<?php
-
-if (session_status() == PHP_SESSION_NONE) session_start();
-
-$products = $Product->getData();
-
-?>
-
-<!DOCTYPE html>
-
+<?php include('../views/sidebar.php') ?>
 
 <div class="m-5" style="margin-top: 6em !important;">
     <div class="page-header d-flex justify-content-between">
         <h3>Products</h3>
-        <a href="products-add.php" style="padding-top: 9px;" class="btn btn-success"><i class='bx bxs-cart-add'></i> Add Product</a>
+        <a href="add.php" style="padding-top: 9px;" class="btn btn-success"><i class='bx bxs-cart-add'></i> Add Product</a>
     </div>
 
-    <!-- <?php print("<pre>" . print_r($products, true) . "</pre>"); ?> -->
     <table class="table mt-3">
 
         <thead>
@@ -35,8 +25,8 @@ $products = $Product->getData();
                     <td class="align-middle"><img id="image-<?php echo $product['item_id'] ?>" src="<?php echo $product['image'] ?>" style="height: 50px; width: auto"></td>
                     <td class="align-middle"><?php echo $product['price'] ?? 'Unkown' ?></td>
                     <td class="align-middle">
-                        <a href='products-edit.php?id=<?php echo $product['item_id'] ?? 'Unkown' ?>' type="button" class="btn btn-sm btn-info"><i class='bx bxs-edit-alt'></i></a>
-                        <a onclick="return delete_confirm(<?php echo $product['item_id'] ?? null ?>)" type="button" class="btn btn-sm btn-danger text-light"><i class='bx bx-x'></i></a>
+                        <a href='edit.php?id=<?php echo $product['item_id'] ?? 'Unkown' ?>' type="button" class="btn btn-sm btn-info"><i class='bx bxs-edit-alt pt-1 pb-1'></i></a>
+                        <a onclick="return delete_confirm(<?php echo $product['item_id'] ?? null ?>)" type="button" class="btn btn-sm btn-danger text-light"><i class='bx bx-x pt-1 pb-1'></i></a>
                     </td>
                 </tr>
             <?php } ?>
@@ -49,7 +39,7 @@ $products = $Product->getData();
             if (id && confirm("Are you sure you want to delete this product?")) {
                 image = $(`#image-${id}`).attr('src');
                 $.ajax({
-                    url: 'templates/ajax.php',
+                    url: '/applabshop/admin/products/delete.php',
                     type: 'post',
                     data: {
                         id,
@@ -69,5 +59,4 @@ $products = $Product->getData();
 
 
 </div>
-
-</html>
+<?php include('../views/footer.php') ?>

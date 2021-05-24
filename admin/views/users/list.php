@@ -1,14 +1,4 @@
-<?php
-
-if (session_status() == PHP_SESSION_NONE) session_start();
-
-?>
-
-
-<?php
-include('templates/sidebar.php');
-$users = $Product->getData('user');
-?>
+<?php include('../views/sidebar.php') ?>
 <div class="m-5" style="margin-top: 6em !important;">
     <div class="page-header d-flex justify-content-between">
         <h3>Users</h3>
@@ -43,4 +33,4 @@ $users = $Product->getData('user');
         </tbody>
     </table>
 </div>
-<?php include('templates/footer.php') ?>
+<?php include('../views/footer.php') ?>

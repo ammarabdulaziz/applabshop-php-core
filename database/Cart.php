@@ -4,8 +4,9 @@ class Cart
 {
     public $db = null;
 
-    public function __construct(DBController $db)
+    public function __construct()
     {
+        $db = new DBController();
         if (!isset($db->con)) return null;
         $this->db = $db;
     }

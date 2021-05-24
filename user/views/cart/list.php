@@ -1,12 +1,3 @@
-<?php
-
-if (session_status() == PHP_SESSION_NONE) session_start();
-
-?>
-
-
-<!DOCTYPE html>
-
 <style>
     .table td.fit,
     .table th.fit {
@@ -29,12 +20,11 @@ if (session_status() == PHP_SESSION_NONE) session_start();
 </style>
 
 <?php
-include('templates/header.php');
-$products = $Product->getData();
+include('../views/header.php');
 
-if (isset($_GET['checkout']) && isset($_SESSION['user_id']) && count($Cart->getCart()) != 0) {
-    $Order->makeOrder();
-};
+// if (isset($_GET['checkout']) && isset($_SESSION['user_id']) && count($Cart->getCart()) != 0) {
+//     $Order->makeOrder();
+// };
 
 ?>
 
@@ -84,7 +74,7 @@ if (isset($_GET['checkout']) && isset($_SESSION['user_id']) && count($Cart->getC
                                         <form method="post">
                                             <input type="hidden" name="item_id" value="<?php echo $product['item_id'] ?? null; ?>">
                                             <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id'] ?? null; ?>">
-                                            <button name="delete-cart-submit" data-item="<?php echo $product['item_id'] ?? '0'; ?>" class="btn btn-sm btn-danger align-middle">Delete</button>
+                                            <button name="delete-cart-submit" data-item="<?php echo $product['item_id'] ?? '0'; ?>" class="btn btn-sm btn-danger align-middle mt-3">Delete</button>
                                         </form>
                                     </td>
                                 </tr>
@@ -97,13 +87,13 @@ if (isset($_GET['checkout']) && isset($_SESSION['user_id']) && count($Cart->getC
                 </table>
                 <div id="cart-empty" class="<?php if (count($Cart->getCart()) !== 0) echo 'closed' ?>">
                     <div class="d-flex justify-content-center">
-                        <img src="public/static/empty_cart.png" height="250px" width="auto" alt="">
+                        <img src="../../public/static/empty_cart.png" height="250px" width="auto" alt="">
                     </div>
                     <div class="d-flex justify-content-center mt-2">
                         <h4>Your cart is empty</h4>
                     </div>
                     <div class="d-flex justify-content-center">
-                        <a href="index.php" class="btn btn-success">Shop Now</a>
+                        <a href="/applabshop/user/products/index.php" class="btn btn-success">Shop Now</a>
                     </div>
                 </div>
             </div>
@@ -139,7 +129,7 @@ if (isset($_GET['checkout']) && isset($_SESSION['user_id']) && count($Cart->getC
                         <h6 class="card-title">Subtotal - <b class="totalQty"><?php echo isset($subTotal) ? count($Cart->getCart()) : 0; ?></b> Items: <span class="text-success subTotal">
                                 <?php echo isset($subTotal) ? $Cart->getSum($subTotal) : 0; ?></span><span class="text-success"> Qr</span>
                         </h6>
-                        <a onclick="<?php if (isset($subTotal)) $_SESSION['totalCart'] = $subTotal; ?> return confirm_order(<?php echo count($Cart->getCart()) ?>, <?php echo isset($_SESSION['user_id']) ?>)" href="cart.php?checkout=true" class="btn btn-sm btn-primary mt-2 checkoutBtn">
+                        <a onclick="<?php if (isset($subTotal)) $_SESSION['totalCart'] = $subTotal; ?> return confirm_order(<?php echo count($Cart->getCart()) ?>, <?php echo isset($_SESSION['user_id']) ?>)" href="/applabshop/user/cart/index.php?checkout=true" class="btn btn-sm btn-primary mt-2 checkoutBtn">
                             Proceed to Buy
                         </a>
                     </div>
@@ -153,7 +143,7 @@ if (isset($_GET['checkout']) && isset($_SESSION['user_id']) && count($Cart->getC
                         } else if (!confirm("Would you like to proceed you order?")) {
                             return false;
                         } else if (isLoggedIn !== 1) {
-                            window.location.href = 'login.php?checkout=true';
+                            window.location.href = '/applabshop/auth/login.php?checkout=true';
                             return false;
                         } else if (isLoggedIn === 1) {
                             return true;
@@ -169,6 +159,4 @@ if (isset($_GET['checkout']) && isset($_SESSION['user_id']) && count($Cart->getC
 
 </section>
 
-<?php include('templates/footer.php') ?>
-
-</html>
+<?php include('../views/footer.php') ?>

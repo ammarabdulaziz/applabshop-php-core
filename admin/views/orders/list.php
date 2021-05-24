@@ -1,15 +1,4 @@
-<?php
-
-if (session_status() == PHP_SESSION_NONE) session_start();
-
-?>
-
-
-<?php
-include('templates/sidebar.php');
-$orders = $Order->getData();
-$order_items = $Order->getOrderItems();
-?>
+<?php include('../views/sidebar.php') ?>
 <div class="m-5" style="margin-top: 6em !important;">
     <div class="page-header d-flex justify-content-between">
         <h3>Orders</h3>
@@ -109,4 +98,4 @@ $order_items = $Order->getOrderItems();
         </div>
     </div>
 <?php } ?>
-<?php include('templates/footer.php') ?>
+<?php include('../views/footer.php') ?>

@@ -13,14 +13,14 @@ $(document).ready(function () {
     // console.log($(this).data('cartid'));
     // Update db Qty
     $.ajax({
-      url: 'templates/ajax.php',
+      url: '../../templates/ajax.php',
       type: 'post',
       data: { cart_id: $(this).data('cartid'), item_id, count: 1, qtyInc: true },
     });
 
     // Get item price
     $.ajax({
-      url: 'templates/ajax.php',
+      url: '../../templates/ajax.php',
       type: 'post',
       data: { item_id: $(this).data('id'), getPrice: true },
       success: function (result) {
@@ -45,14 +45,14 @@ $(document).ready(function () {
 
     // Update db Qty
     $.ajax({
-      url: 'templates/ajax.php',
+      url: '../../templates/ajax.php',
       type: 'post',
       data: { cart_id: $(this).data('cartid'), item_id, count: -1, qtyDec: true },
     });
 
     // Get item price
     $.ajax({
-      url: 'templates/ajax.php',
+      url: '../../templates/ajax.php',
       type: 'post',
       data: { item_id: $(this).data('id'), getPrice: true },
       success: function (result) {
@@ -71,18 +71,19 @@ $(document).ready(function () {
     const user_id = $('input[name="user_id"]').val();
 
     // Get item price
+    console.log(user_id, product_id);
     $.ajax({
-      url: 'templates/ajax.php',
+      url: '../../templates/ajax.php',
       type: 'post',
       data: { item_id: product_id, getPrice: true },
       success: function (result) {
+        console.log(result);
         let obj = JSON.parse(result);
         let price = obj[0].price;
 
         if (user_id) {
-          console.log(price);
           $.ajax({
-            url: 'templates/ajax.php',
+            url: '../../templates/ajax.php',
             type: 'post',
             data: {
               product_id: parseInt(product_id),
@@ -102,7 +103,7 @@ $(document).ready(function () {
           });
         } else {
           $.ajax({
-            url: 'templates/ajax.php',
+            url: '../../templates/ajax.php',
             type: 'post',
             data: {
               product_id: parseInt(product_id),
@@ -145,7 +146,7 @@ $(document).ready(function () {
 
     if (user_id) {
       $.ajax({
-        url: 'templates/ajax.php',
+        url: '../../templates/ajax.php',
         type: 'post',
         data: {
           product_id: parseInt(product_id),
@@ -163,7 +164,7 @@ $(document).ready(function () {
       });
     } else {
       $.ajax({
-        url: 'templates/ajax.php',
+        url: '../../templates/ajax.php',
         type: 'post',
         data: {
           product_id: product_id,
@@ -190,7 +191,7 @@ $(document).ready(function () {
     console.log('Api called', status);
 
     $.ajax({
-      url: 'templates/ajax.php',
+      url: '/applabshop/admin/orders/change.php',
       type: 'post',
       data: {
         order_id,

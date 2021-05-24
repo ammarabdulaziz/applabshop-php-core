@@ -1,11 +1,13 @@
 <?php
 
+
 class User
 {
     public $db = null;
 
-    public function __construct(DBController $db)
+    public function __construct()
     {
+        $db = new DBController();
         if (!isset($db->con)) return null;
         $this->db = $db;
     }
@@ -34,11 +36,11 @@ class User
                         $result = $this->db->con->query($query);
                         if ($result) {
                             unset($_SESSION['cart']);
-                            header("Location: cart.php");
+                            header("Location: /applabshop/user/cart/index.php");
                         }
                     }
                 } else {
-                    header("Location: index.php");
+                    header("Location: /applabshop/user/products/index.php");
                 }
                 $name = "";
                 $username = "";
@@ -94,11 +96,11 @@ class User
                 }
 
                 unset($_SESSION['cart']);
-                header("Location: cart.php");
+                header("Location: /applabshop/user/cart/index.php");
             } else if (isset($orders)) {
-                header("Location: orders.php");
+                header("Location: /applabshop/user/orders/index.php");
             } else {
-                header("Location: index.php");
+                header("Location: /applabshop/user/products/index.php");
             }
         } else {
             return false;
