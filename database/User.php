@@ -62,7 +62,7 @@ class User
 
             if ($user['type'] == 'admin') {
                 $_SESSION['admin'] = $user['user_id'];
-                return header("Location: admin.php");
+                return header("Location: /applabshop/admin/products/index.php");
             }
 
             $_SESSION['user_id'] = $user['user_id'];
@@ -104,6 +104,16 @@ class User
             }
         } else {
             return false;
+        }
+    }
+
+    public function getUser($user_id)
+    {
+        $sql = "SELECT * FROM user WHERE user_id={$user_id}";
+        $result = mysqli_query($this->db->con, $sql);
+
+        if ($result->num_rows > 0) {
+            return $user = mysqli_fetch_array($result, MYSQLI_ASSOC);
         }
     }
 }

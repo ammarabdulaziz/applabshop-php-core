@@ -1,5 +1,6 @@
 <?php
 if (session_status() == PHP_SESSION_NONE) session_start();
+if (!$_SESSION['admin']) header('Location: /applabshop/auth/login.php?login=false');
 
 require_once(dirname(__DIR__) . '/database/DBController.php');
 require('products/productController.php');

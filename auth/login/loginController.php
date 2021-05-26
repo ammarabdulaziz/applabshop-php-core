@@ -16,6 +16,7 @@ class loginController
         // $User = $this->User;
         $checkout = isset($_GET['checkout']) && $_GET['checkout'] == 'true' ? true : null;
         $orders = isset($_GET['orders']) && $_GET['orders'] == 'true' ? true : null;
+        $login = isset($_GET['login']) && $_GET['login'] == 'false' ? true : null;
         return include('./views/login.php');
     }
 
@@ -24,6 +25,7 @@ class loginController
         $errors = array('name' => '', 'username' => '', 'password' => '');
         $checkout = isset($_GET['checkout']) && $_GET['checkout'] == 'true' ? true : null;
         $orders = isset($_GET['orders']) && $_GET['orders'] == 'true' ? true : null;
+        $login = isset($_GET['login']) && $_GET['login'] == 'false' ? true : null;
 
         if (isset($_POST['submit'])) {
             if (empty($_POST['username'])) $errors['username'] = 'Username is empty';

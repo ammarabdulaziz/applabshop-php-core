@@ -73,7 +73,9 @@ class Order
 
     public function getOrderItems()
     {
-        $query = "SELECT * FROM order_table, order_items, product WHERE order_table.order_id =  order_items.order_id AND order_items.item_id = product.item_id";
+        $query = "SELECT * FROM order_table, order_items, product 
+        WHERE order_table.order_id =  order_items.order_id 
+        AND order_items.item_id = product.item_id";
         $result = $this->db->con->query($query);
 
         $resultArray = array();
@@ -108,8 +110,6 @@ class Order
             while ($item = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
                 $resultArray[] = $item;
             }
-            // print("<pre>" . print_r($resultArray, true) . "</pre>");
-            // exit;
             return $resultArray;
         }
     }
@@ -117,7 +117,10 @@ class Order
     public function getMyOrdersItems()
     {
         if (isset($_SESSION['user_id'])) {
-            $query = "SELECT * FROM order_table, order_items, product WHERE order_table.user_id={$_SESSION['user_id']} AND order_table.order_id =  order_items.order_id AND order_items.item_id = product.item_id";
+            $query = "SELECT * FROM order_table, order_items, product 
+            WHERE order_table.user_id={$_SESSION['user_id']} 
+            AND order_table.order_id =  order_items.order_id 
+            AND order_items.item_id = product.item_id";
 
             $result = $this->db->con->query($query);
 
@@ -125,8 +128,25 @@ class Order
             while ($item = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
                 $resultArray[] = $item;
             }
-            // print("<pre>" . print_r($resultArray, true) . "</pre>");
-            // exit;
+            return $resultArray;
+        }
+    }
+
+    public function getByOrderId($id)
+    {
+        if (isset($id)) {
+            $result = $this->db->con->query("SELECT * FROM order_table, order_items , product
+            WHERE order_table.order_id=$id
+            AND order_table.order_id =  order_items.order_id 
+            AND order_items.item_id = product.item_id");
+            // $result = mysqli_query($conn, $sql);
+
+            $resultArray = array();
+
+            while ($item = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+                $resultArray[] = $item;
+            }
+
             return $resultArray;
         }
     }

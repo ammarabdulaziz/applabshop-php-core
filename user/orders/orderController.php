@@ -15,9 +15,6 @@ class orderController
 
     public function index()
     {
-
-        // $orders = $this->Order->getData();
-        // $order_items = $this->Order->getOrderItems();
         $Cart = $this->Cart;
         $myOrders = $this->Order->getMyOrders();
         $myOrdersItems = $this->Order->getMyOrdersItems();

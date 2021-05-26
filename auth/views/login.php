@@ -21,7 +21,7 @@
     <div class="container">
         <p class="login-text" style="font-size: 2rem; font-weight: 800;">Login</p>
         <div class="alert <?php echo isset($error) ? 'alert__error' : 'alert__success'; ?> spacer closed
-        <?php if (isset($error) || isset($checkout) || isset($orders)) echo 'show' ?>" role="alert">
+        <?php if (isset($error) || isset($checkout) || isset($orders) || isset($login)) echo 'show' ?>" role="alert">
             <i class="fa fa-minus-circle alert__icon"></i>
             <p class="alert__text"><?php echo isset($error) ? 'Invalid Username or Password' : 'Please login to continue'; ?></p>
             <button type="button" class="alert__close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">
@@ -43,7 +43,7 @@
             <p class="login-register-text">Don't have an account?
                 <a href="/applabshop/auth/register.php<?php echo isset($checkout) ? '?checkout=true'  : (isset($orders) ? '?orders=true' : '') ?>">
                     Register Here
-                </a>.
+                </a>
             </p>
             <p class="login-register-text"><a href="/applabshop/user/products/index.php">Continue without login</a></p>
         </form>

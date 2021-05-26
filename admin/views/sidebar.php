@@ -100,7 +100,7 @@
                         <div class="job">Web Designer</div>
                     </div>
                 </div>
-                <a href="logout.php"><i class='bx bx-log-out' id="log_out"></i></a>
+                <a href="/applabshop/auth/logout.php"><i class='bx bx-log-out' id="log_out"></i></a>
             </div>
         </div>
     </div>
