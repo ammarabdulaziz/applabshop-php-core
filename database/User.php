@@ -1,5 +1,6 @@
 <?php
 
+require_once(dirname(__DIR__) . '/auth/jwt_utils.php');
 
 class User
 {
@@ -114,6 +115,29 @@ class User
 
         if ($result->num_rows > 0) {
             return $user = mysqli_fetch_array($result, MYSQLI_ASSOC);
+        }
+    }
+
+    public function JWTlogin($username, $password)
+    {
+
+        $sql = "SELECT * FROM user WHERE username='{$username}' AND password='{$password}'";
+        $result = mysqli_query($this->db->con, $sql);
+
+        if ($result->num_rows > 0) {
+            $user = mysqli_fetch_array($result, MYSQLI_ASSOC);
+            $username = $user['username'];
+            $user_id = $user['user_id'];
+            $type = $user['type'];
+
+            $headers = array('alg' => 'HS256', 'typ' => 'JWT');
+            $payload = array('username' => $username, 'user_id' => $user_id, 'type' => $type, 'exp' => (time() + 6000));
+
+            $jwt = generate_jwt($headers, $payload);
+
+            print_r(json_encode(array('token' => $jwt)));
+        } else {
+            return false;
         }
     }
 }

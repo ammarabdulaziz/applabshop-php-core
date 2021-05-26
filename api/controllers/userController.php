@@ -13,9 +13,13 @@ class userController
         $this->Product = new Product();
     }
 
-    public function read()
+    public function read($user_id, $type)
     {
         $users = $this->Product->getData('user');
+
+        if ($user_id && $type != 'admin') foreach ($users as $user) {
+            if ($user['user_id'] == $user_id) $users = $user;
+        }
 
         if (count($users) != 0) {
             http_response_code(200);
@@ -25,12 +29,15 @@ class userController
         return print_r(json_encode(['message' => 'No users found']));
     }
 
-    public function readOne()
+    public function readOne($user_id, $type)
     {
-        if (!isset($_GET['id'])) return print_r(json_encode(['message' => 'Invalid pramater key']));
-        if (!is_numeric($_GET['id'])) return print_r(json_encode(['message' => 'Id should be numeric']));
+        if ($type == 'admin') {
+            if (!isset($_GET['user_id'])) return print_r(json_encode(['message' => 'Parameter user_id not provided']));
+            if (!is_numeric($_GET['user_id'])) return print_r(json_encode(['message' => 'Id should be numeric']));
+            $user_id = $_GET['user_id'];
+        }
 
-        $user = $this->User->getUser($_GET['id']);
+        $user = $this->User->getUser($user_id);
 
         if (isset($user)) {
             http_response_code(200);

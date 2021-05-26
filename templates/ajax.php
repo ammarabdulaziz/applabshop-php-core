@@ -18,7 +18,7 @@ if (isset($_POST['deleteCart'])) {
 }
 
 if (isset($_POST['qtyDec']) || isset($_POST['qtyInc'])) {
-    $result = $Cart->updateQty($_POST['cart_id'], $_POST['count'], $_POST['item_id']);
+    $result = $Cart->updateQty($_POST['cart_id'], $_POST['count'], $_POST['item_id'], $_SESSION['user_id']);
     echo json_encode($result);
 }
 

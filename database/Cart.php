@@ -94,10 +94,10 @@ class Cart
         }
     }
 
-    public function updateQty($cart_id, $count, $item_id, $table = 'cart')
+    public function updateQty($cart_id, $count, $item_id, $user_id = null, $table = 'cart')
     {
         if (isset($_SESSION['user_id'])) {
-            $query = sprintf("UPDATE %s SET qty = qty + %d WHERE cart_id = %s", $table, intval($count), $cart_id);
+            $query = sprintf("UPDATE %s SET qty = qty + %d WHERE cart_id = %s and user_id = %s", $table, intval($count), $cart_id, $user_id);
 
             $result = $this->db->con->query($query);
             return $result;
@@ -110,10 +110,10 @@ class Cart
         }
     }
 
-    public function getCartItem($cart_id)
+    public function getCartItem($cart_id, $user_id)
     {
         if (isset($cart_id)) {
-            $result = $this->db->con->query("SELECT * FROM cart WHERE cart_id={$cart_id}");
+            $result = $this->db->con->query("SELECT * FROM cart WHERE cart_id={$cart_id} AND user_id={$user_id}");
 
             $resultArray = array();
 
@@ -125,10 +125,10 @@ class Cart
         }
     }
 
-    public function deleteCartApi($cart_id, $table = 'cart')
+    public function deleteCartApi($cart_id, $user_id, $table = 'cart')
     {
         if ($cart_id != null) {
-            $result = $this->db->con->query("DELETE FROM {$table} WHERE cart_id={$cart_id}");
+            $result = $this->db->con->query("DELETE FROM {$table} WHERE cart_id={$cart_id} AND user_id = {$user_id}");
             if ($result) return $result;
         }
     }

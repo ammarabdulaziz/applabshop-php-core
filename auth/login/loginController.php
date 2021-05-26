@@ -39,4 +39,17 @@ class loginController
             }
         }
     }
+
+    public function loginJWT()
+    {
+        $error = [];
+        if (!isset($_POST['username']) || empty($_POST['username'])) array_push($error, 'username');
+        if (!isset($_POST['password']) || empty($_POST['password'])) array_push($error, 'password');
+
+        $params = implode(', ', $error);
+        if (count($error) > 0) return print_r(json_encode(['message' => 'Fields ' . $params . ' not entered correctly']));
+
+        $error = $this->User->JWTlogin($_POST['username'], md5($_POST['password']));
+        if (isset($error)) return print_r(json_encode(['message' => 'Login failed']));
+    }
 }
