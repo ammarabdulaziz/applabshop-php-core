@@ -13,17 +13,19 @@ class User
         $this->db = $db;
     }
 
-    public function createUser($name, $username, $password, $checkout, $errors)
+    public function createUser($name, $username, $email, $password, $checkout, $errors)
     {
         $sql = "SELECT * FROM user WHERE username='{$username}'";
         $result = mysqli_query($this->db->con, $sql);
 
         if (!$result->num_rows > 0) {
-            $query = "INSERT INTO user (username, name, password) VALUES ('$username', '$name', '$password')";
+            $query = "INSERT INTO user (username, name, email, password) VALUES ('$username', '$name', '$email', '$password')";
             $result = $this->db->con->query($query);
+
             if ($result) {
                 $last_id = mysqli_insert_id($this->db->con);
                 $_SESSION["user_id"] = $last_id;
+                $_SESSION["email"] = $email;
 
                 if (isset($checkout)) {
                     foreach ($_SESSION['cart'] as $cart_item) {
@@ -67,6 +69,7 @@ class User
             }
 
             $_SESSION['user_id'] = $user['user_id'];
+            $_SESSION['email'] = $user['email'];
 
             if (isset($checkout)) {
                 foreach ($_SESSION['cart'] as $cart_item) {
@@ -128,10 +131,11 @@ class User
             $user = mysqli_fetch_array($result, MYSQLI_ASSOC);
             $username = $user['username'];
             $user_id = $user['user_id'];
+            $email = $user['email'] ?? null;
             $type = $user['type'];
 
             $headers = array('alg' => 'HS256', 'typ' => 'JWT');
-            $payload = array('username' => $username, 'user_id' => $user_id, 'type' => $type, 'exp' => (time() + 6000));
+            $payload = array('username' => $username, 'user_id' => $user_id, 'email' => $email, 'type' => $type, 'exp' => (time() + 6000));
 
             $jwt = generate_jwt($headers, $payload);
 

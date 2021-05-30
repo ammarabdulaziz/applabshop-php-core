@@ -1,5 +1,13 @@
 <?php
 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+
+require_once(dirname(__DIR__) . '/PHPMailer/src/PHPMailer.php');
+require_once(dirname(__DIR__) . '/PHPMailer/src/SMTP.php');
+require_once(dirname(__DIR__) . '/PHPMailer/src/Exception.php');
+
 class Order
 {
     public $db = null;
@@ -54,7 +62,13 @@ class Order
                 $result = $this->db->con->query($query);
 
                 unset($_SESSION['totalCart']);
-                if ($result) header("Location: confirm-order.php");
+                if ($result) {
+                    $order = $this->getByOrderId($params['order_id']);
+                    // print("<pre>" . print_r($order) . "</pre>");
+                    // exit;
+                    header("Location: /applabshop/user/views/orders/confirm-order.php");
+                    // $sent = $this->sendConfirmationEmail($params);
+                }
             }
         }
     }
@@ -149,5 +163,30 @@ class Order
 
             return $resultArray;
         }
+    }
+
+    public function sendConfirmationEmail($params)
+    {
+        $mail = new PHPMailer(true);
+
+        //SMTP Settings
+        $mail->isSMTP();
+        $mail->Host = "smtp.gmail.com";
+        $mail->SMTPAuth = true;
+        $mail->Username = "ammarabdulaziz99@gmail.com";
+        $mail->Password = '';
+        $mail->Port = 465; //587
+        $mail->SMTPSecure = "ssl"; //tls
+
+        //Email Settings
+        $mail->SMTPDebug = SMTP::DEBUG_SERVER;
+        $mail->isHTML(true);
+        $mail->setFrom($_SESSION['email'], 'Ammar Abdul Aziz');
+        $mail->addAddress(address: $_SESSION['email']);
+        $mail->Subject = 'New Subject';
+        $mail->Body = 'Your order from Applabshop has been confirmed.';
+
+        if ($mail->send()) return true;
+        else return false;
     }
 }

@@ -32,9 +32,7 @@ if ($url == $base_url . 'url/product.php') return
 
 $bearer_token = get_bearer_token();
 if (empty($bearer_token)) return print_r(json_encode(['message' => 'Access denied. No JWT found']));
-
-$is_jwt_valid = is_jwt_valid($bearer_token);
-if (!($is_jwt_valid)) return print_r(json_encode(array('error' => 'Access denied')));
+if (!(is_jwt_valid($bearer_token))) return print_r(json_encode(array('error' => 'Access denied')));
 
 $user_id = get_token_data($bearer_token, 'user_id');
 $type = get_token_data($bearer_token, 'type');

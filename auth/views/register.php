@@ -26,6 +26,10 @@
                 <small style="color: red; margin: 1.5em;"><?php echo $errors['username'] ?? '' ?></small>
             </div>
             <div class="input-group">
+                <input type="email" placeholder="Email" name="email" value="<?php echo $_POST['email'] ?? '' ?>">
+                <small style="color: red; margin: 1.5em;"><?php echo $errors['email'] ?? '' ?></small>
+            </div>
+            <div class="input-group">
                 <input type="password" placeholder="Password" name="password" value="<?php echo $_POST['password'] ?? '' ?>">
                 <small style="color: red; margin: 1.5em;"><?php echo $errors['password'] ?? '' ?></small>
             </div>

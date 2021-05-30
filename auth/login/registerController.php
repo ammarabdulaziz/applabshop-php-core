@@ -52,13 +52,15 @@ class registerController
             if (empty($_POST['name'])) $errors['name'] = 'Name is empty';
             if (empty($_POST['username'])) $errors['username'] = 'Username is empty';
             if (empty($_POST['password'])) $errors['password'] = 'Password is empty';
+            if (empty($_POST['email'])) $errors['email'] = 'Email is empty';
 
             if (!array_filter($errors)) {
                 $name = $_POST['name'];
                 $username = $_POST['username'];
+                $email = $_POST['email'];
                 $password = md5($_POST['password']);
 
-                $errors['username'] = $this->User->createUser($name, $username, $password, $checkout, $errors);
+                $errors['username'] = $this->User->createUser($name, $username, $email, $password, $checkout, $errors);
                 if (isset($errors)) return include('./views/register.php');
             } else {
                 return include('./views/register.php');
